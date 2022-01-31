@@ -8,7 +8,7 @@ import (
 
 type fileRecordWriter struct{}
 
-func (frp *fileRecordWriter) Write(records [][]string, chunkSize int) error {
+func (frp *fileRecordWriter) Write(records Records, chunkSize int) error {
 	err := loadChunks(records, chunkSize)
 	if err != nil {
 		return fmt.Errorf(" Error writing chunk: %s ", err)
@@ -16,7 +16,7 @@ func (frp *fileRecordWriter) Write(records [][]string, chunkSize int) error {
 	return nil
 }
 
-func writeCsv(records [][]string, fileName string) error {
+func writeCsv(records Records, fileName string) error {
 	file, err := os.Create(fileName)
 	defer file.Close()
 	if err != nil {
@@ -39,7 +39,7 @@ func writeCsv(records [][]string, fileName string) error {
 	return nil
 }
 
-func loadChunks(records [][]string, chunkSize int) error {
+func loadChunks(records Records, chunkSize int) error {
 	for i := 0; i < len(records); i++ {
 		if (i+1)*chunkSize > len(records) {
 			break

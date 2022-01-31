@@ -14,7 +14,7 @@ type RecordSplitter interface {
 }
 
 type RecordWriter interface {
-	Write(records [][]string, chunkSize int) error
+	Write(Records, int) error
 }
 
 func process(rp RecordProvider, rs RecordSplitter, rw RecordWriter) error {

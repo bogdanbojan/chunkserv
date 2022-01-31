@@ -7,7 +7,7 @@ import (
 type fileRecordSplitter struct{}
 
 func (frs *fileRecordSplitter) Split(lines Lines) (r Records) {
-	var records [][]string
+	var records Records
 	for _, l := range lines {
 		record := splitLine(l)
 		if isValid(record) {
@@ -17,11 +17,11 @@ func (frs *fileRecordSplitter) Split(lines Lines) (r Records) {
 	return records
 }
 
-func splitLine(line string) (l []string) {
+func splitLine(line string) (l []string) { // Lines return
 	return strings.Split(line, "|")
 }
 
-func isValid(line []string) (v bool) {
+func isValid(line Lines) (v bool) {
 	var valid bool = true
 	for _, v := range line {
 		if v == "" {
