@@ -2,9 +2,6 @@ package main
 
 import "fmt"
 
-var Header []string
-var ChunkSize int
-
 type Records [][]string
 type Lines []string
 

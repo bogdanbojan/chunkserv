@@ -7,6 +7,9 @@ import (
 	"strings"
 )
 
+var Header []string
+var ChunkSize int
+
 type fileRecordProvider struct{}
 
 func (frp *fileRecordProvider) Get() (Lines, error) {
