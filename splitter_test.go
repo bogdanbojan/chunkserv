@@ -1,17 +1,26 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestSplitLine(t *testing.T) {
-	testLine := "1|Mavra|Malec|mmalec0@usa.gov|Female|229.215.245.102"
-	got := splitLine(testLine)
-	want := Lines{"1", "Mavra", "Malec", "mmalec0@usa.gov", "Female", "229.215.245.102"}
+	assertEqual := func(t testing.TB, got Lines, want Lines) {
+		t.Helper()
+		for i, v := range got {
+			if v != want[i] {
+				t.Errorf("got %q want %q", got, want)
+			}
+		}
+	}
 
-	fmt.Println(got, want)
+	t.Run("same line", func(t *testing.T) {
+		testLine := "1|Mavra|Malec|mmalec0@usa.gov|Female|229.215.245.102"
+		got := splitLine(testLine)
+		want := Lines{"1", "Mavra", "Malec", "mmalec0@usa.gov", "Female", "229.215.245.102"}
 
+		assertEqual(t, got, want)
+	})
 	//if !isEqual(got, want) {
 	//	t.Errorf("got %q want %q", got, want)
 	//}
