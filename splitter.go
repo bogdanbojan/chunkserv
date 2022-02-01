@@ -4,9 +4,11 @@ import (
 	"strings"
 )
 
+const Separator = "|"
+
 type fileRecordSplitter struct{}
 
-func (frs *fileRecordSplitter) Split(lines Lines) (r Records) {
+func (frs *fileRecordSplitter) Split(lines Lines) Records {
 	var records Records
 	for _, l := range lines {
 		record := splitLine(l)
@@ -17,8 +19,8 @@ func (frs *fileRecordSplitter) Split(lines Lines) (r Records) {
 	return records
 }
 
-func splitLine(line string) (l []string) { // Lines return
-	return strings.Split(line, "|")
+func splitLine(line string) Lines {
+	return strings.Split(line, Separator)
 }
 
 func isValid(line Lines) (v bool) {

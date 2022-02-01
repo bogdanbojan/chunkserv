@@ -15,24 +15,24 @@ type fileRecordProvider struct{}
 func (frp *fileRecordProvider) Get() (Lines, error) {
 	chunkSize, err := getChunkSize()
 	if err != nil {
-		return nil, fmt.Errorf("Error getting chunk size: %s", err)
+		return nil, fmt.Errorf("Error getting chunk size: %v", err)
 	}
 	ChunkSize = chunkSize
 	filePath, err := getFilePath()
 	if err != nil {
-		return nil, fmt.Errorf("Error getting file path: %s", err)
+		return nil, fmt.Errorf("Error getting file path: %v", err)
 	}
 	lines, err := getLines(filePath)
 	if err != nil {
-		return nil, fmt.Errorf("Error getting lines: %s", err)
+		return nil, fmt.Errorf("Error getting lines: %v", err)
 	}
 	return lines, nil
 }
 
-func getLines(filePath string) (lines []string, err error) {
+func getLines(filePath string) (lines Lines, err error) {
 	file, err := os.Open(filePath)
 	if err != nil {
-		return nil, fmt.Errorf("Error opening file: %s", err)
+		return nil, fmt.Errorf("Error opening file: %v", err)
 	}
 
 	scanner := bufio.NewScanner(file)
@@ -62,6 +62,8 @@ func getFilePath() (fp string, err error) {
 	filePath, err := reader.ReadString('\n')
 	if filePath == "" || filePath == "\n" || filePath == "\r\n" {
 		filePath = "input.txt"
+	} else {
+		filePath = strings.Replace(filePath, "\r\n", "", -1)
 	}
 	return filePath, err
 }
@@ -69,6 +71,6 @@ func getFilePath() (fp string, err error) {
 func getHeader(scanner *bufio.Scanner) (h []string) {
 	scanner.Scan()
 	var header []string
-	header = strings.Split(scanner.Text(), "|")
+	header = strings.Split(scanner.Text(), Separator)
 	return header
 }

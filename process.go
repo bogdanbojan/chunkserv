@@ -20,14 +20,14 @@ type RecordWriter interface {
 func process(rp RecordProvider, rs RecordSplitter, rw RecordWriter) error {
 	records, err := rp.Get()
 	if err != nil {
-		return fmt.Errorf(" Error getting records: %s ", err)
+		return fmt.Errorf(" Error getting records: %v ", err)
 	}
 
 	splitRecords := rs.Split(records)
 
 	err = rw.Write(splitRecords, ChunkSize)
 	if err != nil {
-		return fmt.Errorf(" Error writing records: %s ", err)
+		return fmt.Errorf(" Error writing records: %v ", err)
 	}
 	return nil
 }
